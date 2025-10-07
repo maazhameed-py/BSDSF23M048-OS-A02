@@ -1,20 +1,21 @@
-# Compiler
-CC = gcc
-CFLAGS = -Wall
-SRC = src/ls-v1.4.0.c   # updated source file for Feature 5
-BIN_DIR = bin
-TARGET = $(BIN_DIR)/ls   # simple name "ls"
+# Compiler settings
+CC       = gcc
+CFLAGS   = -Wall -Wextra -std=gnu11
+SRC      = src/ls-v1.5.0.c
+BIN_DIR  = bin
+TARGET   = $(BIN_DIR)/ls
 
 # Default target
 all: $(TARGET)
 
-# Build the executable
+# Build target
 $(TARGET): $(SRC)
 	@mkdir -p $(BIN_DIR)
-	$(CC) $(CFLAGS) $(SRC) -o $(TARGET)
+	$(CC) $(CFLAGS) -o $@ $<
 
-# Clean compiled files
+# Remove compiled binary
 clean:
 	rm -f $(TARGET)
 
+# Phony targets (not real files)
 .PHONY: all clean
