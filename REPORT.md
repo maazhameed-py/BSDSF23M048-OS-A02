@@ -109,6 +109,72 @@ Only after all entries are known can a sort function like `qsort()` arrange them
 void qsort(void *base, size_t nitems, size_t size,
            int (*compar)(const void *, const void *));
 
+```
+
+# Feature-6: ls-v1.5.0 – Colorized Output Based on File Type
+
+## ANSI escape codes for color (Linux terminals)
+
+- Format: ESC [ params m  (SGR: Select Graphic Rendition)
+- ESC is byte 0x1B, written as `\x1b` or `\033`
+- Reset with `0` → `\x1b[0m`
+
+Green text sequences:
+- Standard green: `\x1b[32m`
+- Bright green: `\x1b[92m`
+- Reset: `\x1b[0m`
+
+Examples:
+```sh
+# Bash
+echo -e "\033[32mThis is green\033[0m"
+echo -e "\033[92mThis is bright green\033[0m"
+echo -e "\033[1;32mThis is bold/bright green\033[0m"
+```
+
+```c
+// C
+printf("\x1b[32mThis is green\x1b[0m\n");
+printf("\x1b[92mThis is bright green\x1b[0m\n");
+printf("\x1b[1;32mThis is bold/bright green\x1b[0m\n");
+```
+
+---
+
+## Executable permission bits in st_mode
+
+Include:
+```c
+#include <sys/stat.h>
+```
+
+Bits to check:
+- Owner executable: `S_IXUSR` (0100)
+- Group executable: `S_IXGRP` (0010)
+- Others executable: `S_IXOTH` (0001)
+
+Check if a regular file is executable by anyone:
+```c
+struct stat st;
+if (stat(path, &st) == 0) {
+    int is_regular = S_ISREG(st.st_mode);
+    int is_exec_any = (st.st_mode & (S_IXUSR | S_IXGRP | S_IXOTH)) != 0;
+
+    if (is_regular && is_exec_any) {
+        printf("\x1b[32m%s\x1b[0m\n", name);  // color executables green
+    } else {
+        printf("%s\n", name);
+    }
+}
+```
+
+Check individually:
+```c
+int owner_exec  = (st.st_mode & S_IXUSR) != 0;
+int group_exec  = (st.st_mode & S_IXGRP) != 0;
+int others_exec = (st.st_mode & S_IXOTH) != 0;
+```
+
 
 
 
