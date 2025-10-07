@@ -1,7 +1,7 @@
 # Compiler settings
 CC       = gcc
 CFLAGS   = -Wall -Wextra -std=gnu11
-SRC      = src/ls-v1.5.0.c
+SRC      = src/ls-v1.6.0.c
 BIN_DIR  = bin
 TARGET   = $(BIN_DIR)/ls
 
