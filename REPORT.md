@@ -177,6 +177,32 @@ int others_exec = (st.st_mode & S_IXOTH) != 0;
 
 
 
+# Feature 7: Recursive Listing (v1.6.0)
+
+## 1. Base Case in a Recursive Function
+A **base case** is the condition that stops recursion from continuing indefinitely. It prevents infinite loops by providing a terminating condition.  
+
+**In the recursive `ls` implementation:**  
+- The base case occurs when a directory contains **no subdirectories** or when all entries are `.` or `..`.  
+- At this point, the recursion stops, and the function returns without making further recursive calls.
+
+## 2. Importance of Constructing Full Paths
+Before making a recursive call, it is essential to construct the **full path** of a directory (`parent_dir/subdir`) instead of just the subdirectory name.  
+
+**Reason:**  
+- Without the full path, the recursive call would look for the subdirectory in the **current working directory**, not in the nested location.  
+- This would cause errors or incorrect listings if the program is traversing multiple levels of directories.  
+
+**Example:**  
+```c
+char path[1024];
+snprintf(path, sizeof(path), "%s/%s", parent_dir, entry_name);
+do_ls(path, mode, recursive_flag);
+**
+
+
+
+
 
 
 
