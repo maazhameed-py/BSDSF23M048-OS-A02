@@ -87,6 +87,29 @@ if (st.st_mode & S_IXUSR) { /* owner execute */ }
   - `-l` → call **long listing** function  
   - `-x` → call **horizontal** function  
   - default → call **vertical column** function
+ 
+# Feature-5: ls-v1.4.0 – Alphabetical Sort
+
+## Why read all directory entries before sorting?
+
+Sorting requires comparing all filenames, so the program must first **load every directory entry into memory** (e.g., into an array).  
+Only after all entries are known can a sort function like `qsort()` arrange them.
+
+### Drawbacks
+- **High memory use:** Millions of files consume large RAM.  
+- **Slow performance:** Sorting huge lists takes time.  
+- **Scalability issues:** May cause swapping or crashes with very large directories.
+
+---
+
+## Purpose and Signature of `qsort()` Comparison Function
+
+**Prototype:**
+```c
+void qsort(void *base, size_t nitems, size_t size,
+           int (*compar)(const void *, const void *));
+
+
 
 
 
