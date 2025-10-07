@@ -1,4 +1,4 @@
-## Feature-2 Report Questions
+# Feature-2 Report Questions
 
 ### 1. Crucial difference between `stat()` and `lstat()`
 
@@ -74,5 +74,20 @@ if (st.st_mode & S_IXUSR) { /* owner execute */ }
     - Possibly cause unnecessary wrapping or wasted space.
 
 ---
+
+# Feature 4: ls-v1.3.0 –  Horizontal Column Display (Across)
+
+### Q1: Compare the implementation complexity of "down then across" vs "across" printing logic.
+- **Down then across (vertical):** Requires calculating rows and mapping filenames to column-row positions → more pre-calculation.  
+- **Across (horizontal):** Prints sequentially left-to-right, wraps on terminal width → simpler, less calculation.
+
+### Q2: Describe the strategy used to manage different display modes (-l, -x, default).
+- Used an **integer flag** to track display mode.  
+- After reading filenames:
+  - `-l` → call **long listing** function  
+  - `-x` → call **horizontal** function  
+  - default → call **vertical column** function
+
+
 
 
