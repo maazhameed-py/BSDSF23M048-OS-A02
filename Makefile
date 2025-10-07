@@ -1,7 +1,7 @@
 # Compiler
 CC = gcc
 CFLAGS = -Wall
-SRC = src/ls-v1.1.0.c
+SRC = src/ls-v1.2.0.c   # updated source file for Feature 3
 BIN_DIR = bin
 TARGET = $(BIN_DIR)/ls   # simple name "ls"
 
